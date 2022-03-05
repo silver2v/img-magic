@@ -10,7 +10,6 @@ from string import ascii_letters, digits
 
 UPLOAD_FOLDER = 'uploads'
 OUTPUT_FOLDER = 'output/final_output'
-# UPLOAD_FOLDER = '/Users/rudi/Projects/Photo_app/uploads'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
 
 # Configure application
@@ -18,7 +17,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 app.config['SECRET_KEY'] = 'some random string'
-
 
 command = "python3 Bringing-Old-Photos-Back-to-Life/run.py"
 
@@ -69,7 +67,6 @@ def upload_file():
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
-            call("rm uploads/.DS_Store", shell=True)
             call(command1, shell=True)
 
             return redirect(url_for('download_file', name=filename))
