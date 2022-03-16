@@ -63,7 +63,8 @@ def upload_file():
 
             command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {upload_folder} \
               --output_folder {upload_folder}/output \
-              --GPU -1"
+              --GPU -1 \
+              --with_scratch"
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
