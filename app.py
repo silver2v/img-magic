@@ -79,3 +79,5 @@ def upload_file():
 def download_file(name):
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
 
+if __name__=="__main__":
+    app.run(host='0.0.0.0', port=8080)
