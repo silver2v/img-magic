@@ -6,16 +6,17 @@ from flask import Flask, flash, request, redirect, url_for, render_template, sen
 from werkzeug.utils import secure_filename
 from random import choice
 from string import ascii_letters, digits
+# import webbrowser
 
 
-UPLOAD_FOLDER = 'uploads'
+ROOT_UPLOAD_FOLDER = 'uploads'
 OUTPUT_FOLDER = 'output/final_output'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
 
 # Configure application
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER --> nesse momento é desnecessário
+# app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER --> nesse momento é desnecessário
 app.config['SECRET_KEY'] = 'some random string'
 
 command = "python3 Bringing-Old-Photos-Back-to-Life/run.py"
@@ -49,20 +50,21 @@ def upload_file():
             filename = secure_filename(file.filename)
 
             new_folder = id_generator(filename)
-            upload_folder = f'uploads/{new_folder}'
+            complete_upload_folder = f'ROOT_UPLOAD_FOLDER/{new_folder}'
 
-            while os.path.exists(upload_folder):
-                new_folder = id_generator(filename)
-                upload_folder = f'uploads/{new_folder}'
+            # (tinha isso, n lembro porque coloquei, parece desnecessário)
+            # while os.path.exists(upload_folder):
+            #     new_folder = id_generator(filename)
+            #     upload_folder = f'uploads/{new_folder}'
             
-            os.makedirs(upload_folder)
+            os.makedirs(complete_upload_folder)
             
-            app.config['UPLOAD_FOLDER'] = upload_folder
-            output_folder = f'{upload_folder}/output/final_output'
+            app.config['UPLOAD_FOLDER'] = complete_upload_folder
+            output_folder = f'{complete_upload_folder}/output/final_output'
             app.config['OUTPUT_FOLDER'] = output_folder
 
-            command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {upload_folder} \
-              --output_folder {upload_folder}/output \
+            command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+              --output_folder {complete_upload_folder}/output \
               --GPU -1" ##\
               ##--with_scratch"
 
@@ -75,7 +77,7 @@ def upload_file():
     return render_template('index.html')
 
 
-@app.route('/output/<name>')
+@app.route('/<name>')
 def download_file(name):
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
 
