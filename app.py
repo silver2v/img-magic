@@ -50,7 +50,7 @@ def upload_file():
             filename = secure_filename(file.filename)
 
             new_folder = id_generator(filename)
-            complete_upload_folder = f'ROOT_UPLOAD_FOLDER/{new_folder}'
+            complete_upload_folder = f'{ROOT_UPLOAD_FOLDER}/{new_folder}'
 
             # (tinha isso, n lembro porque coloquei, parece desnecessário)
             # while os.path.exists(upload_folder):
