@@ -6,10 +6,10 @@ from flask import Flask, flash, request, redirect, url_for, render_template, sen
 from werkzeug.utils import secure_filename
 from random import choice
 from string import ascii_letters, digits
-# import webbrowser
+import webbrowser
 
 
-ROOT_UPLOAD_FOLDER = 'uploads'
+ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -71,15 +71,26 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
             call(command1, shell=True)
+            return render_template("test.html", folder=complete_upload_folder, filename=filename)
+            
+            #return """<img src=f"{output_folder}/{filename}">"""
 
-            return redirect(url_for('download_file', name=filename))
+            # return redirect(url_for('download_file', name=filename))
 
     return render_template('index.html')
+
+@app.route('/test')
+def show_test():
+    return render_template('test.html')
 
 
 @app.route('/<name>')
 def download_file(name):
+
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
+    
+    
+    
 
 if __name__=="__main__":
     app.run(host='0.0.0.0', port=8080)

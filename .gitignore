@@ -1,4 +1,5 @@
 uploads/
+static/uploads
 __pycache__
 hangman.py
 test.py
