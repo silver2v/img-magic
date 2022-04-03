@@ -1,1 +1,40 @@
-<img src="{{ complete_upload_folder}}{{filename}}">
+<!DOCTYPE html>
+<html>
+
+
+<style>
+    #preloader{
+        background: #000 url(static/loader1.gif) no-repeat center;
+        background-size:30%;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        z-index: 100;
+
+    }
+</style>
+
+<html>
+    <head>
+        <title>Your resutared image</title>
+    </head>
+
+    <body>
+        <div id="preloader"></div>
+
+        <!-- <img src="static/jiminy.jpeg"> -->
+
+        <img src="{{output_folder}}/{{filename}}">
+    
+    <script>
+
+        var loader = document.getElementById("preloader");
+
+        window.addEventListener("load", function() { 
+            loader.style.display = "none";
+        })
+    </script>
+    
+    </body>
+
+</html>

@@ -30,20 +30,23 @@
         {% if get_flashed_messages() %}
                {{ get_flashed_messages() | join(" ") }} 
         {% endif %}
+        <div id="loading"></div>
+        <div id="content">
+            <h1>Hi! Please upload your image</h1>
+            <form method="post" enctype="multipart/form-data" target="_blank">
+            
+                <input type="file" name="file" id="inpFile">
+                <input type="submit" value="Upload">
+            
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview" class="image-preview__image">
 
-        <h1>Hi! Please upload your image</h1>
-        <form method="post" enctype="multipart/form-data" target="_blank">
+                    <span class="image-preview__default-text">Image Preview</span>   
+                </div>
             
-            <input type="file" name="file" id="inpFile">
-            <input type="submit" value="Upload">
+            </form>
             
-            <div class="image-preview" id="imagePreview">
-                <img src="" alt="Image Preview" class="image-preview__image">
-
-                <span class="image-preview__default-text">Image Preview</span>   
-            </div>
-            
-        </form>
+        </div>
     
         <script>
             const inpFile = document.getElementById("inpFile");

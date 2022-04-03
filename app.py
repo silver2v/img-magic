@@ -71,11 +71,14 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
             call(command1, shell=True)
-            return render_template("test.html", folder=complete_upload_folder, filename=filename)
+            
+            #return render_template("test.html", folder=complete_upload_folder, filename=filename)
             
             #return """<img src=f"{output_folder}/{filename}">"""
 
             # return redirect(url_for('download_file', name=filename))
+
+            return render_template('test.html', output_folder=output_folder, filename=filename )
 
     return render_template('index.html')
 
@@ -86,8 +89,9 @@ def show_test():
 
 @app.route('/<name>')
 def download_file(name):
+    return 
 
-    return send_from_directory(app.config["OUTPUT_FOLDER"], name)
+    #return send_from_directory(app.config["OUTPUT_FOLDER"], name)
     
     
     
