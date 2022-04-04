@@ -4,6 +4,35 @@
     <head>
         <!-- <link href="/static/styles.css" rel="stylesheet"> -->
         <title>Photo App</title>
+        <style>
+            .loader {
+                animation: is-rotating 1s infinite;
+                width: 50px;
+                height: 50px;
+                border: 6px solid #e5e5e5;
+                border-radius:50%;
+                border-top-color: #51d4db;
+                display: none
+            }
+
+            @keyframes is-rotating {
+            to {
+                transform: rotate(1turn);
+            }
+
+            }
+
+            /* .loader{
+                background: #000 url(static/loader1.gif) center;
+                height: 200px;
+                width: 200px;
+                z-index: 100;
+                display: none */
+                /* position: fixed; */
+
+            }
+        </style>
+
     </head>
     <body>
         {% if get_flashed_messages() %}
@@ -11,11 +40,20 @@
         {% endif %}
 
         <h1>Hi! Please upload your image</h1>
+        <div class="loader" id="loader-anime"></div>
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
+            <input type="file" name="file" id="image">
+            <input type="submit" value="Upload" id="upload">
         </form>
     
+        <script>
+            const upload = document.getElementById("upload");
+            const animationContainer = document.getElementById("loader-anime");
 
+            upload.addEventListener("click", function() {
+                animationContainer.style.display = "block";
+            });
+        </script>
+        
     </body>
 </html>
