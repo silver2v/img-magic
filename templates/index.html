@@ -20,11 +20,38 @@
                 color: #cccccc;
             }
 
-         .image-preview__image {
+            .image-preview__image {
                     display: none;
                     width: 100%;
                 }
+            .loader {
+                animation: is-rotating 1s infinite;
+                width: 50px;
+                height: 50px;
+                border: 6px solid #e5e5e5;
+                border-radius:50%;
+                border-top-color: #51d4db;
+                display: none
+            }
+
+            @keyframes is-rotating {
+            to {
+                transform: rotate(1turn);
+            }
+
+            }
+
+            /* .loader{
+                background: #000 url(static/loader1.gif) center;
+                height: 200px;
+                width: 200px;
+                z-index: 100;
+                display: none */
+                /* position: fixed; */
+
+            /* } */
         </style>
+
     </head>
     <body>
         {% if get_flashed_messages() %}
@@ -33,14 +60,15 @@
         <!-- <div id="loading"></div>
         <div id="content"> -->
             <h1>Hi! Please upload your image</h1>
+            <div class="loader" id="loader-anime"></div>
+
             <form method="post" enctype="multipart/form-data">
             
                 <input type="file" name="file" id="inpFile">
-                <input type="submit" value="Upload">
+                <input type="submit" value="Upload" id="upload">
             
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Image Preview" class="image-preview__image">
-
                     <span class="image-preview__default-text">Image Preview</span>   
                 </div>
             
@@ -79,5 +107,15 @@
 
         </script>
 
+<script>
+    const upload = document.getElementById("upload");
+    const animationContainer = document.getElementById("loader-anime");
+
+    upload.addEventListener("click", function() {
+        animationContainer.style.display = "block";
+    });
+</script>
+
+       
     </body>
 </html>
