@@ -41,6 +41,20 @@
 
             }
 
+            #wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #loader-anime{
+                margin: 5px;
+            }
+
+            #image-upload{
+                margin: 5px;
+            }
+
             /* .loader{
                 background: #000 url(static/loader1.gif) center;
                 height: 200px;
@@ -59,20 +73,26 @@
         {% endif %}
         <!-- <div id="loading"></div>
         <div id="content"> -->
-            <h1>Hi! Please upload your image</h1>
-            <div class="loader" id="loader-anime"></div>
+        <h1>Hi! Please upload your image</h1>
+        
+        <div id="wrapper">
 
-            <form method="post" enctype="multipart/form-data">
+            <div id="image-upload"> 
+                <form method="post" enctype="multipart/form-data">
             
-                <input type="file" name="file" id="inpFile">
-                <input type="submit" value="Upload" id="upload">
+                    <input type="file" name="file" id="inpFile">
+                    <input type="submit" value="Upload" id="upload">
+                
+                    <div class="image-preview" id="imagePreview">
+                        <img src="" alt="Image Preview" class="image-preview__image">
+                        <span class="image-preview__default-text">Image Preview</span>   
+                    </div>
             
-                <div class="image-preview" id="imagePreview">
-                    <img src="" alt="Image Preview" class="image-preview__image">
-                    <span class="image-preview__default-text">Image Preview</span>   
-                </div>
+                </form>
             
-            </form>
+            </div>
+
+            <div class="loader" id="loader-anime"></div>
             
         </div>
     
@@ -107,14 +127,14 @@
 
         </script>
 
-<script>
-    const upload = document.getElementById("upload");
-    const animationContainer = document.getElementById("loader-anime");
+    <script>
+        const upload = document.getElementById("upload");
+        const animationContainer = document.getElementById("loader-anime");
 
-    upload.addEventListener("click", function() {
-        animationContainer.style.display = "block";
-    });
-</script>
+        upload.addEventListener("click", function() {
+            animationContainer.style.display = "block";
+        });
+    </script>
 
        
     </body>
