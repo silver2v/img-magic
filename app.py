@@ -72,13 +72,20 @@ def upload_file():
             
             call(command1, shell=True)
             
+            original = complete_upload_folder + "/" + filename
+            result = output_folder + "/" + filename
+
+            
+
             #return render_template("test.html", folder=complete_upload_folder, filename=filename)
+            # return render_template("test3.html", result=result)
             
             #return """<img src=f"{output_folder}/{filename}">"""
 
-            return redirect(url_for('download_file', name=filename))
+            # return redirect(url_for('download_file', name=filename))
 
-            # return render_template('test.html', output_folder=output_folder, filename=filename )
+            return render_template('result.html', original=original, result=result )
+            # return redirect(url_for('show_result'), original=original, result=result)
 
     return render_template('index.html')
 
@@ -91,6 +98,11 @@ def show_test():
 @app.route('/<name>')
 def download_file(name):
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
+
+@app.route('/result')
+def show_result():
+    return render_template('result.html')
+
     
     
 
