@@ -30,10 +30,10 @@
         {% if get_flashed_messages() %}
                {{ get_flashed_messages() | join(" ") }} 
         {% endif %}
-        <div id="loading"></div>
-        <div id="content">
+        <!-- <div id="loading"></div>
+        <div id="content"> -->
             <h1>Hi! Please upload your image</h1>
-            <form method="post" enctype="multipart/form-data" target="_blank">
+            <form method="post" enctype="multipart/form-data">
             
                 <input type="file" name="file" id="inpFile">
                 <input type="submit" value="Upload">
