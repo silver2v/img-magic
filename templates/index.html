@@ -11,10 +11,28 @@
             }
 
             .image-preview {
-                width: 500px;
-                min-height: 200px;
+                width: 400px;
+                min-height: 400px;
                 border: 2px solid #dddddd;
                 margin-top: 15px;
+
+            
+
+                /* Default text */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                color: #cccccc;
+            }
+
+            .result-preview {
+                width: 400px;
+                min-height: 400px;
+                /* border: 2px solid #dddddd; */
+                margin-top: 15px;
+
+            
 
                 /* Default text */
                 display: flex;
@@ -51,6 +69,7 @@
                 max-width: 80%;
                 flex-wrap: wrap;
                 justify-content: space-around;
+                /* justify-content: center; */
                 align-items: center;
             }
 
@@ -102,7 +121,12 @@
                <h1> ==> </h1>
            </div>
 
-            <div class="loader" id="loader-anime"></div>
+           <div class="result-preview" id="imagePreview">
+            <img src="" alt="Image Preview" class="image-preview__image">
+            <span class="image-preview__default-text2" id="image-preview__default-text2">Image Preview</span> 
+            <div class="loader" id="loader-anime"></div>  
+        
+            
             
         </div>
         
@@ -142,9 +166,11 @@
     <script>
         const upload = document.getElementById("upload");
         const animationContainer = document.getElementById("loader-anime");
+        const previewDefaultText2 = document.getElementById("image-preview__default-text2");
 
         upload.addEventListener("click", function() {
             animationContainer.style.display = "block";
+            previewDefaultText2.style.display = "none";
         });
     </script>
 
