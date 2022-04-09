@@ -65,12 +65,21 @@ def upload_file():
 
             command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
               --output_folder {complete_upload_folder}/output \
-              --GPU -1" ##\
-              ##--with_scratch"
+              --GPU -1"
+            
+            command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+              --output_folder {complete_upload_folder}/output \
+              --GPU -1 \
+              --with_scratch"
+            
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
-            call(command1, shell=True)
+            extra = request.form.get("extra")
+
+            if not extra == "extra":
+                call(command1, shell=True)
+            else: call(command2, shell=True)
             
             original = complete_upload_folder + "/" + filename
             result = output_folder + "/" + filename
