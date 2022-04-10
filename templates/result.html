@@ -2,86 +2,14 @@
 
 <html lang="en" translate="no">
     <head>
+        <title>Photo App</title>
         <meta name="google" content="notranslate">
         <!-- <link rel="stylesheet" type="text/css" href="/Templates/CSS/bootstrap.min.css" title="standard"  class="notranslate" /> -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!-- <link href="/static/styles.css" rel="stylesheet"> -->
-        <title>Photo App</title>
-    
-        <style>
-
-        h1 {
-            text-align:center;
-        }
-            .image-preview {
-                width: 500px;
-                min-height: 200px;
-                border: 2px solid #dddddd;
-                margin-top: 15px;
-
-                /* Default text */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                color: #cccccc;
-            }
-
-            .image-preview__image {
-                    display: none;
-                    width: 100%;
-                }
-            .loader {
-                animation: is-rotating 1s infinite;
-                width: 50px;
-                height: 50px;
-                border: 6px solid #e5e5e5;
-                border-radius:50%;
-                border-top-color: #51d4db;
-                display: none
-            }
-
-            @keyframes is-rotating {
-            to {
-                transform: rotate(1turn);
-            }
-
-            }
-
-            #wrapper {
-                display: flex;
-                margin: auto;
-                max-width: 80%;
-                flex-wrap: wrap;
-                justify-content: space-around;
-                align-items: center;
-            }
-            #loader-anime{
-                margin: 5px;
-            }
-
-            #image-upload{
-                margin: 5px;
-            }
-
-            /* .loader{
-                background: #000 url(static/loader1.gif) center;
-                height: 200px;
-                width: 200px;
-                z-index: 100;
-                display: none */
-                /* position: fixed; */
-
-            /* } */
-        </style>
-
+        <link href="/static/css/styles.css" rel="stylesheet">
     </head>
+    
     <body>
-        {% if get_flashed_messages() %}
-               {{ get_flashed_messages() | join(" ") }} 
-        {% endif %}
-        <!-- <div id="loading"></div>
-        <div id="content"> -->
         <div class ="notranslate"> 
             <h1 translate="no">Voilà!</h1>
         </div>
@@ -115,7 +43,7 @@
         </div>
         
         <!-- <img src='static/jiminy.jpeg'> -->
-        <img src="" alt="">
+        <!-- <img src="" alt="">
         <script>
             const inpFile = document.getElementById("inpFile");
             const previewContainer = document.getElementById("imagePreview");
@@ -154,7 +82,7 @@
         upload.addEventListener("click", function() {
             animationContainer.style.display = "block";
         });
-    </script>
+    </script> -->
 
     
 
