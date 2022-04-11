@@ -63,15 +63,17 @@ body {
 font-family: "Helvetica Neue";
 }
 
-.navbar{
+.navbar1{
     display:flex;
-    height: 50px;
+    height: 60px;
     background-color: black;
     /* margin-top: 0px;
     padding-top: 0px;
     top: 0px; */
     /* flex-direction: row; */
     justify-content: space-around;
+    font-size: x-large;
+
 }
 
 .text-nav{
@@ -82,7 +84,7 @@ font-family: "Helvetica Neue";
     padding-right:5px;
     justify-content: center;
     align-items: center;
-    font-size: larger;
+    font-size:25px;
     /* background-color: green; */
     /* vertical-align: middle;
     text-align: center; */
@@ -94,7 +96,7 @@ a {
     color: inherit;
 }
 .image-preview {
-    width: 420px;
+    width: 500px;
     min-height: 300px;
     border: 2px solid #dddddd;
     margin-top: 15px;
@@ -109,7 +111,7 @@ a {
 }
 
 .result-preview {
-    width: 400px;
+    width: 600px;
     min-height: 400px;
     /* border: 2px solid #dddddd; */
     margin-top: 15px;
@@ -149,7 +151,8 @@ to {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    max-width: 80%;
+    margin-bottom: 20px;
+    max-width: 85%;
     flex-wrap: wrap;
     justify-content: space-around;
     /* justify-content: center; */
@@ -162,6 +165,23 @@ to {
 
 #image-upload{
     margin: 0px;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 
 /* old animation, used a gif */

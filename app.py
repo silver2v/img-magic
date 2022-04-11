@@ -13,6 +13,9 @@ ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
 
+original = ""
+result = ""
+
 # Configure application
 app = Flask(__name__)
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER --> nesse momento é desnecessário
@@ -94,7 +97,7 @@ def upload_file():
             # return redirect(url_for('download_file', name=filename))
 
             return render_template('result.html', original=original, result=result )
-            # return redirect(url_for('show_result'), original=original, result=result)
+            # return redirect(url_for('voila'))
 
     return render_template('index.html')
 
@@ -108,9 +111,9 @@ def show_test():
 def download_file(name):
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
 
-@app.route('/result')
-def show_result():
-    return render_template('result.html')
+@app.route('/voila')
+def voila():
+    return render_template('result.html', original=original)
 
     
     

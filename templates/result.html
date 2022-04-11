@@ -4,8 +4,7 @@
     <head>
         <title>Photo App</title>
         <meta name="google" content="notranslate">
-        <!-- <link rel="stylesheet" type="text/css" href="/Templates/CSS/bootstrap.min.css" title="standard"  class="notranslate" /> -->
-        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="/static/styles.css" rel="stylesheet">
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap");
@@ -33,20 +32,20 @@
     
     <body>
 
-        <div class="navbar">
+        <nav class="navbar1">
             <div class="text-nav"><a href="/"><strong>imgmagik</strong></a></div>
 
             <div class="text-nav"><strong>about</strong></div>
-        </div>
+        </nav>
 
         <div class ="notranslate"> 
             <h1 style="margin:65px;" translate="no">... and voilà!</h1>
         </div>
         
-        <div id="wrapper" style="margin:auto">
+        <div id="wrapper">
 
             <div> 
-                <a href="{{ original }}" target="_blank"><img src="{{ original }}" alt="Image Preview" style="max-width: 400px;"></a>            
+                <a href="{{ original }}" target="_blank"><img src="{{ original }}" alt="Image Preview" style="max-width: 650px;"></a>            
             </div>
 
             <div class="arrowed" style= "margin-top: 10px; margin-right:0px; margin-left:0px;">
@@ -54,7 +53,7 @@
 		    </div>
 
             <div class="result">
-                <a href="{{ result }}" target="_blank"><img src="{{ result }}" alt="" style="max-width: 400px;"></a>
+                <a href="{{ result }}" target="_blank"><img src="{{ result }}" alt="" style="max-width: 650px;"></a>
             </div>
             
         </div>
