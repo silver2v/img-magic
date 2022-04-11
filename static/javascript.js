@@ -28,13 +28,17 @@ inpFile.addEventListener("change", function() {
 });
 
 
-
 const upload = document.getElementById("upload");
 const animationContainer = document.getElementById("loader-anime");
+// const animationContainer2 = document.getElementById("loader-anime2");
+const animationContainer2 = document.getElementsByClassName("mosaic-loader")
 const previewDefaultText2 = document.getElementById("image-preview__default-text2");
 
 upload.addEventListener("click", function() {
-    animationContainer.style.display = "block";
+    // animationContainer.style.display = "block";
+    // animationContainer2.style.display = "flex";
+    document.querySelectorAll(".loader-anime2").forEach(a=>a.style.display = "flex");
+
     previewDefaultText2.style.display = "none";
 });
 

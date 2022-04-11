@@ -2,50 +2,84 @@
 
 <html lang="en">
     <head>
-        <title>Photo App</title>
-        <link href="/static/css/styles.css" rel="stylesheet">
+        <title>imgmagik app</title>
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/crazy-animation.css" rel="stylesheet">
         
-
     </head>
     <body>
+
+        <div class="navbar">
+            <div class="text-nav"><a href="/"><strong>imgmagik</strong></a></div>
+
+            <div class="text-nav"><strong>about</strong></div>
+        </div>
+
         {% if get_flashed_messages() %}
                {{ get_flashed_messages() | join(" ") }} 
         {% endif %}
         <!-- <div id="loading"></div>
         <div id="content"> -->
-        <h1>Hi! Please upload your image</h1>
+        <h1 style="margin-top:50px; margin-bottom: 50px;">Hi! <br>Restore your image like magik :-)</h1>
         
         <div id="wrapper">
-
             <div id="image-upload"> 
                 <form method="post" enctype="multipart/form-data">
             
                     <input type="file" name="file" id="inpFile">
-                    <input type="checkbox" id="extra" name="extra" value="extra"><label for="extra">Extra</label>
+                    <label><input type="checkbox" id="extra" name="extra" value="extra"/> with scratch</label>
                     <input type="submit" value="Upload" id="upload">
                 
                     <div class="image-preview" id="imagePreview">
                         <img src="" alt="Image Preview" class="image-preview__image">
-                        <span class="image-preview__default-text">Image Preview</span>   
+                        <span class="image-preview__default-text" style="padding-bottom:45px;">No image choosen</span>   
                     </div>
             
                 </form>
             
             </div>
-           <div>
-               <h1> ==> </h1>
-           </div>
+           
+            <!-- gambiarrei com o margin-top para alinhar -->
+            <div class="arrowed" style= "margin-top: 15px; margin-right:0px; margin-left:0px;">
+			    <div class="arrow-6" ></div>
+		    </div>
+            
+            <!-- gambiarrei com o style abaixo para deixar alinhado com o quadrado do lado esquerdo -->
+        <!-- <div class="result-preview" id="imagePreview" style="background-color: brown; margin:0px;"> -->
+            <span class="image-preview__default-text2" id="image-preview__default-text2">Your restaured image will be here</span> 
+            
+            <!-- bellow is the first animation version -->
+            <!-- <div class="loader" id="loader-anime"></div>   -->
 
-           <div class="result-preview" id="imagePreview">
-            <img src="" alt="Image Preview" class="image-preview__image">
-            <span class="image-preview__default-text2" id="image-preview__default-text2">Image Preview</span> 
-            <div class="loader" id="loader-anime"></div>  
-        
-        </div>
-        
+            <!-- Crazy animation here -->
+            <div class="loader-anime2"> Please wait...</div>
+            <div class="mosaic-loader loader-anime2">
+                <div class="cell d-0"></div>
+                <div class="cell d-1"></div>
+                <div class="cell d-2"></div>
+                <div class="cell d-3"></div>
+                <div class="cell d-1"></div>
+                <div class="cell d-2"></div>
+                <div class="cell d-3"></div>
+                <div class="cell d-4"></div>
+                <div class="cell d-2"></div>
+                <div class="cell d-3"></div>
+                <div class="cell d-4"></div>
+                <div class="cell d-5"></div>
+                <div class="cell d-3"></div>
+                <div class="cell d-4"></div>
+                <div class="cell d-5"></div>
+                <div class="cell d-6"></div>
+            </div>
+        <!-- </div> -->
+
+
+    
         <!-- <img src='static/jiminy.jpeg'> -->
-        <img src="" alt="">
+        <!-- <img src="" alt=""> -->
     </body>
 </html>
 
+
 <script src="{{url_for('static', filename='javascript.js')}}"></script>
+<script src="{{url_for('static', filename='crazy-animation.js')}}"></script>
