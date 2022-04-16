@@ -9,11 +9,24 @@
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap");
     
-    z
+    body {
+        align-items: center;
+        justify-content: center;
+        /* display: flex; */
+        /* 
+        flex-direction: column;
+        
+        min-height: 100vh;
+        margin: 0; */
+        font-family: "Lato";
+        /* font-weight: 300;
+        font-size: 24px;
+        background: #2b2b2b; */
+    }
     
-    /* .loader-anime2{
+    .loader-anime2{
         display:none;
-    } */
+    }
         </style>
     </head>
     
@@ -23,26 +36,17 @@
             <a href="/"><strong class="text-nav">imgmagik AI</strong></a>
 
             <a href="/about"><strong class="text-nav">about</strong></a>
-        </nav>
+    </nav>
 
-        <div class ="notranslate"> 
-            <h1 style="margin:65px;" translate="no">... and voilà!</h1>
+        <div class ="notranslate" style="margin:auto"> 
+            <h4 style="margin:65px; text-align:center" translate="no">Oops... <br>Seems like you uploaded a corrupted or not a true image file</h4>
         </div>
         
-        <div class="wrapper">
+        <div id="wrapper" style="max-width: 40%;">
 
-            <div style="max-width: 40.50%;"> 
-                <a href="{{ original }}" target="_blank"><img src="{{ original }}" alt="Image Preview" style="max-width: 100%;"></a>            
-            </div>
+            <img src="static/faildog.jpeg" style="max-width: 100%">
 
-            <div class="arrowed" style= "margin-top: 10px; margin-right:0px; margin-left:0px;">
-			    <div class="arrow-6" ></div>
-		    </div>
-
-            <div class="result" style="max-width: 40.50%;">
-                <a href="{{ result }}" target="_blank"><img src="{{ result }}" alt="" style="max-width: 100%;"></a>
-            </div>
-            
+           
         </div>
            
     </body>

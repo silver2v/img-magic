@@ -60,7 +60,7 @@ h1 {
 }
 
 body {
-font-family: "Helvetica Neue";
+font-family: "Lato";
 }
 
 .navbar1{
@@ -91,7 +91,20 @@ font-family: "Helvetica Neue";
     
 }
 
+.text-nav:hover {
+    /* background-color: white; */
+    color:lightgray;
+    /* color: rgb(200, 200, 200); */
+}
+
+
+
 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
     text-decoration: none;
     color: inherit;
 }
@@ -147,11 +160,11 @@ to {
 
 }
 
-#wrapper {
+.wrapper {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     max-width: 85%;
     flex-wrap: wrap;
     justify-content: space-around;

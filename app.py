@@ -2,25 +2,26 @@ from distutils.command.upload import upload
 import os
 from string import ascii_uppercase
 from subprocess import call
+from turtle import width
 from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 from random import choice
 from string import ascii_letters, digits
-import webbrowser
-
+from cv2 import imread, IMREAD_UNCHANGED, resize, INTER_AREA, imwrite, imshow, waitKey, destroyAllWindows
 
 ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
-ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
-original = ""
-result = ""
+# original = ""
+# result = ""
 
 # Configure application
 app = Flask(__name__)
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER --> nesse momento é desnecessário
 # app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER --> nesse momento é desnecessário
 app.config['SECRET_KEY'] = 'some random string'
+# app.config['MAX_CONTENT_LENGTH'] = 0.01 * 1024 * 1024
 
 command = "python3 Bringing-Old-Photos-Back-to-Life/run.py"
 
@@ -39,8 +40,14 @@ def upload_file():
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
+
+        
+        
+        # if (file[-3:] or file[-4:]) not in ALLOWED_EXTENSIONS:
+        # if not file in ALLOWED_EXTENSIONS:
+        #     flash('Allowed file types only: %s' % (ALLOWED_EXTENSIONS))
+        #     return redirect(request.url)
         file = request.files['file']
-        print(file.filename)
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
         if file.filename == '':
@@ -48,7 +55,11 @@ def upload_file():
             return redirect(request.url)
         # print(file and allowed_file(file.filename)
 
-        if allowed_file(file.filename):
+        if not (file and allowed_file(file.filename)):
+            flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS))
+            
+            #  %s" % (str(x) for x in ALLOWED_EXTENSIONS))
+        else:
             print('hey')
             filename = secure_filename(file.filename)
 
@@ -77,15 +88,59 @@ def upload_file():
             
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            
+
+            #### CREATED THIS STUFF TO DECREASE DIMENTIONS IF ABOVE 1M PIXELS TO SPEED UP PROCESSING
+            img = imread(f'{complete_upload_folder}/{filename}')
+            print("height: " + str(img.shape[0]))
+            print("width: ", img.shape[1])
+
+            width = img.shape[1]
+            height = img.shape[0]
+            pixels = width * height
+            print('total pixels:', pixels)
+
+            if pixels > 500_000:
+                while pixels > 500_000:
+                    width = int(width * 95 / 100)
+                    height = int(height * 95 / 100)
+                    dim = (width, height)
+                    pixels = width * height
+                    print('new total pixels:', pixels)
+
+                #resize image
+                resized = resize(img, dim, interpolation = INTER_AREA)
+
+                imwrite(f'{complete_upload_folder}/{filename}', resized)
+    
+                print('Resized Dimensions : ',resized.shape)
+
+
+            #### FINISHED THAT PART
+
             extra = request.form.get("extra")
 
             if not extra == "extra":
                 call(command1, shell=True)
-            else: call(command2, shell=True)
+            else: 
+                call(command2, shell=True)
+
             
+            ## getting the links to post the pre and post pics
             original = complete_upload_folder + "/" + filename
-            result = output_folder + "/" + filename
+
+            #sometimes the program changes the extension of the
+            #output file to png (eg if the original file was a jpg), 
+            # so that must be taken into consideration
+            
+            output_filename = None
+            for file in os.listdir(output_folder):
+                output_filename = file
+
+            ## if the user uploaded a corrupted or not true image
+            if not output_filename:
+                return redirect('/oops')
+            
+            result = output_folder + "/" + output_filename
 
             
 
@@ -95,11 +150,11 @@ def upload_file():
             #return """<img src=f"{output_folder}/{filename}">"""
 
             # return redirect(url_for('download_file', name=filename))
-
+           
             return render_template('result.html', original=original, result=result )
             # return redirect(url_for('voila'))
 
-    return render_template('index.html')
+    return render_template('index2.html')
 
 # not being used atm
 @app.route('/test')
@@ -115,6 +170,9 @@ def download_file(name):
 def voila():
     return render_template('result.html', original=original)
 
+@app.route('/oops')
+def oops():
+    return render_template("error.html")
     
     
 
