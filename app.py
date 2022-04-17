@@ -5,7 +5,6 @@ from subprocess import call
 from turtle import width
 # from types import NoneType
 from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
-from sqlalchemy import null
 from werkzeug.utils import secure_filename
 from random import choice
 from string import ascii_letters, digits
