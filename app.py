@@ -99,8 +99,8 @@ def upload_file():
             pixels = width * height
             print('total pixels:', pixels)
 
-            if pixels > 500_000:
-                while pixels > 500_000:
+            if pixels > 1_000_000:
+                while pixels > 1_000_000:
                     width = int(width * 95 / 100)
                     height = int(height * 95 / 100)
                     dim = (width, height)
@@ -118,6 +118,11 @@ def upload_file():
             #### FINISHED THAT PART
 
             extra = request.form.get("extra")
+
+            ## Just for AWS
+            if extra == "extra":
+                flash('The option "with scratch" is not available at the moment, please try again with it unchecked.')
+                return redirect(request.url)
 
             if not extra == "extra":
                 call(command1, shell=True)
@@ -166,13 +171,16 @@ def show_test():
 def download_file(name):
     return send_from_directory(app.config["OUTPUT_FOLDER"], name)
 
-@app.route('/voila')
-def voila():
-    return render_template('result.html', original=original)
+
 
 @app.route('/oops')
 def oops():
     return render_template("error.html")
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+    
     
     
 
