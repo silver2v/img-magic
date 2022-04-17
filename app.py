@@ -3,7 +3,9 @@ import os
 from string import ascii_uppercase
 from subprocess import call
 from turtle import width
+# from types import NoneType
 from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
+from sqlalchemy import null
 from werkzeug.utils import secure_filename
 from random import choice
 from string import ascii_letters, digits
@@ -56,7 +58,7 @@ def upload_file():
         # print(file and allowed_file(file.filename)
 
         if not (file and allowed_file(file.filename)):
-            flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS))
+            flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS) +  "." + " Please try again.")
             
             #  %s" % (str(x) for x in ALLOWED_EXTENSIONS))
         else:
@@ -91,6 +93,13 @@ def upload_file():
 
             #### CREATED THIS STUFF TO DECREASE DIMENTIONS IF ABOVE 1M PIXELS TO SPEED UP PROCESSING
             img = imread(f'{complete_upload_folder}/{filename}')
+
+            if img is None:
+                flash("""Seems like you uploaded a corrupted or not a true image file. 
+                    Please try again with a new file.""")
+                return redirect(request.url)
+                # return redirect('/oops')
+           
             print("height: " + str(img.shape[0]))
             print("width: ", img.shape[1])
 
@@ -119,7 +128,7 @@ def upload_file():
 
             extra = request.form.get("extra")
 
-            ## Just for AWS
+            # Just for AWS
             if extra == "extra":
                 flash('The option "with scratch" is not available at the moment, please try again with it unchecked.')
                 return redirect(request.url)
@@ -141,7 +150,7 @@ def upload_file():
             for file in os.listdir(output_folder):
                 output_filename = file
 
-            ## if the user uploaded a corrupted or not true image
+            ## if for some reason execution didn't finished (must change text)
             if not output_filename:
                 return redirect('/oops')
             
@@ -185,4 +194,4 @@ def about():
     
 
 if __name__=="__main__":
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0')
