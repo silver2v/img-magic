@@ -80,7 +80,7 @@ def upload_file():
 
             command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
               --output_folder {complete_upload_folder}/output \
-              --GPU 0,1,2"
+              --GPU -1"
             
             command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
               --output_folder {complete_upload_folder}/output \
@@ -151,7 +151,7 @@ def upload_file():
             for file in os.listdir(output_folder):
                 output_filename = file
 
-            ## if for some reason execution didn't finished (must change text)
+            ## if for some reason execution didn't finish (must change text)
             if not output_filename:
                 return redirect('/oops')
             
@@ -177,9 +177,9 @@ def show_test():
     return render_template('test.html')
 
 
-@app.route('/<name>')
-def download_file(name):
-    return send_from_directory(app.config["OUTPUT_FOLDER"], name)
+# @app.route('/<name>')
+# def download_file(name):
+#     return send_from_directory(app.config[OUTPUT_FOLDER], name)
 
 
 
