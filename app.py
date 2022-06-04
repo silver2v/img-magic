@@ -84,7 +84,7 @@ def upload_file():
             
             command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
               --output_folder {complete_upload_folder}/output \
-              --GPU 0,1,2 \
+              --GPU -1 \
               --with_scratch"
             
 
@@ -128,11 +128,11 @@ def upload_file():
             
 
             # Just for AWS
-            # extra = request.form.get("extra")
-            extra = ""
-            if extra == "extra":
-                flash('The option "with scratch" is not available at the moment, please try again with it unchecked.')
-                return redirect(request.url)
+            extra = request.form.get("extra")
+            # extra = ""
+            # if extra == "extra":
+            #     flash('The option "with scratch" is not available at the moment, please try again with it unchecked.')
+            #     return redirect(request.url)
 
             if not extra == "extra":
                 call(command1, shell=True)
