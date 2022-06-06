@@ -15,7 +15,7 @@
     </head>
     <body>
 
-        <nav class="navbar1">
+        <nav class="navbar1 sticky-top navbar-expand-lg">
             <a href="/"><strong class="text-nav">imgmagik AI</strong></a>
 
             <a href="/about"><strong class="text-nav">about</strong></a>
@@ -25,15 +25,13 @@
            {{ get_flashed_messages() | join(" ") }} 
     {% endif %}
     </flash>
-   
-        <!-- <div id="loading"></div>
-        <div id="content"> -->
-        <h1 style="margin-top:32px; margin-bottom: 80px;">Hi! <br>Restore your image, like magik :-)</h1>
+    
+        <h1 style="margin-top:32px; margin-bottom: 80px;">Hi! <br>Restore your image, like magik :-)<p style="font-size:25px; margin-top: 10px;">(scroll down for examples)</p></h1>
         
         <div class="wrapper" >
             <div id="image-upload"> 
                 <form method="post" enctype="multipart/form-data">
-                    <div class="fileUpload btn btn-dark" style="margin-left:0px">
+                    <div class="fileUpload btn btn-dark" style="margin-left:0px; background-color: rgb(50, 50, 100);">
                         <span>Choose image</span>
                         <input type="file" name="file" id="inpFile" class="upload">
                     </div>
@@ -91,15 +89,14 @@
             </sub_container>
         </div>
 
-        <!-- <hr style=" display:flex; max-width: 85%; margin:auto; margin-top:70px;"> -->
+       
         <div class="wrapper" style="margin-top: 25px; margin-bottom: 20px; flex-direction: column;">
     
 
             <h3 style="margin-bottom:25px">Examples</h3>
             
             
-        
-
+    
             <div class="wrapper" style="max-width: 100%; margin-bottom: 3%; justify-content: space-evenly;">
                 <div style="max-width: 45%;">
                      <img src="static/examples/familia-90s.png" alt="" style="max-width:98.5%"> 
@@ -182,8 +179,7 @@
              </div>
         </div>
     
-        <!-- <img src='static/jiminy.jpeg'> -->
-        <!-- <img src="" alt=""> -->
+    
     </body>
 </html>
 
