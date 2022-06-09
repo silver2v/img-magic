@@ -99,7 +99,7 @@ To keep the original name of the uploaded image, the app creates a unique folder
 def folder_name_generator(prefix, size=6, chars=ascii_letters + digits):
     return prefix + '_' + ''.join(choice(chars) for _ in range(size))
 ````
-Where `prefix` is the original name of the image, followed by "_" and 6 random charachters. 
+Where `prefix` is the original name of the image, followed by "_" and 6 pseudo-random charachters. 
 
 With this implementation, the restored image can preserve its original name, instead of the app outputing a file with a name like Dwsk$kaj299@##1io09!Sjsj3939b.jpg
 
