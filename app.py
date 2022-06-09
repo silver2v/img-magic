@@ -9,7 +9,7 @@ from cv2 import imread, resize, INTER_AREA, imwrite, imshow, waitKey, destroyAll
 
 ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
 
 # Initializing flask application
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def allowed_extension(filename):
 #   will be stored (1st part of the name of the folder, aka prefix is file name itself)
 #   This makes each folder name unique, and name of image can be preserved)
 #   Ex. folder name: my-image_kjdjksi.jpg
-def id_generator(prefix, size=6, chars=ascii_letters + digits):
+def folder_name_generator(prefix, size=6, chars=ascii_letters + digits):
     return prefix + '_' + ''.join(choice(chars) for _ in range(size))
 
 
@@ -50,18 +50,20 @@ def upload_file():
    
         if not (file and allowed_extension(file.filename)):
             flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS) +  "." + " Please try again.")
+
+        img = imread(file.filename)
+
+        if img is None:
+                flash("""Seems like you uploaded a corrupted or not a true image file. 
+                    Please try again with a new file.""")
+                return redirect(request.url)
             
         else:
             print('hey')
             filename = secure_filename(file.filename)
 
-            new_folder = id_generator(filename)
+            new_folder = folder_name_generator(filename)
             complete_upload_folder = f'{ROOT_UPLOAD_FOLDER}/{new_folder}'
-
-            # (tinha isso, n lembro porque coloquei, parece desnecessário)
-            # while os.path.exists(upload_folder):
-            #     new_folder = id_generator(filename)
-            #     upload_folder = f'uploads/{new_folder}'
             
             os.makedirs(complete_upload_folder)
 
@@ -81,14 +83,6 @@ def upload_file():
             
 
             file.save(os.path.join(complete_upload_folder, filename))
-
-            #### CREATED THIS STUFF TO DECREASE DIMENTIONS IF ABOVE 1M PIXELS TO SPEED UP PROCESSING
-            img = imread(f'{complete_upload_folder}/{filename}')
-
-            if img is None:
-                flash("""Seems like you uploaded a corrupted or not a true image file. 
-                    Please try again with a new file.""")
-                return redirect(request.url)
            
             # Checking the image dimensions in pixels         
             print("height: " + str(img.shape[0]))
