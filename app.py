@@ -52,97 +52,95 @@ def upload_file():
         if not (file and allowed_extension(file.filename)):
             flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS) +  "." + " Please try again.")
 
-        img = imread(file.filename)
+        print('hey')
+        filename = secure_filename(file.filename)
+
+        new_folder = folder_name_generator(filename)
+        complete_upload_folder = f'{ROOT_UPLOAD_FOLDER}/{new_folder}'
+        
+        os.makedirs(complete_upload_folder)
+
+
+        output_folder = f'{complete_upload_folder}/output/final_output'
+        #Obs.: not necessary to makedir output_folder because "run.py" will do it by itself
+    
+        # The CLI commands the original implementation uses
+        command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+            --output_folder {complete_upload_folder}/output \
+            --GPU -1"
+        
+        command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+            --output_folder {complete_upload_folder}/output \
+            --GPU -1 \
+            --with_scratch"
+        
+        file.save(os.path.join(complete_upload_folder, filename))
+
+        img = imread(f'{complete_upload_folder}/{filename}')
 
         if img is None:
-                flash("""Seems like you uploaded a corrupted or not a true image file. 
-                    Please try again with a new file.""")
-                return redirect(request.url)
-            
-        else:
-            print('hey')
-            filename = secure_filename(file.filename)
-
-            new_folder = folder_name_generator(filename)
-            complete_upload_folder = f'{ROOT_UPLOAD_FOLDER}/{new_folder}'
-            
-            os.makedirs(complete_upload_folder)
-
-
-            output_folder = f'{complete_upload_folder}/output/final_output'
-            #Obs.: not necessary to makedir output_folder because "run.py" will do it by itself
+            flash("""Seems like you uploaded a corrupted or not a true image file. 
+                Please try again with a new file.""")
+            return redirect(request.url)
         
-            # The CLI commands the original implementation uses
-            command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
-              --output_folder {complete_upload_folder}/output \
-              --GPU -1"
-            
-            command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
-              --output_folder {complete_upload_folder}/output \
-              --GPU -1 \
-              --with_scratch"
-            
+        # Checking the image dimensions in pixels         
+        print("height: " + str(img.shape[0]))
+        print("width: ", img.shape[1])
 
-            file.save(os.path.join(complete_upload_folder, filename))
-           
-            # Checking the image dimensions in pixels         
-            print("height: " + str(img.shape[0]))
-            print("width: ", img.shape[1])
+        height = img.shape[0]
+        width = img.shape[1]
+        
+        pixels = width * height
+        print('total pixels:', pixels)
 
-            height = img.shape[0]
-            width = img.shape[1]
-            
-            pixels = width * height
-            print('total pixels:', pixels)
+        reduce = True
+        max_pixels = 1_000_000
+        
+        # If dimenions of image bigger than  max_pixels, reduce 5% (while loop)
+        if reduce == True and pixels > max_pixels:
+            while pixels > 1_000_000:
+                width = int(width * 95 / 100)
+                height = int(height * 95 / 100)
+                dim = (width, height)
+                pixels = width * height
+                print('new total pixels:', pixels)
 
-            reduce = True
-            max_pixels = 1_000_000
-            
-            # If dimenions of image bigger than  max_pixels, reduce 5% (while loop)
-            if reduce == True and pixels > max_pixels:
-                while pixels > 1_000_000:
-                    width = int(width * 95 / 100)
-                    height = int(height * 95 / 100)
-                    dim = (width, height)
-                    pixels = width * height
-                    print('new total pixels:', pixels)
+            #resize image
+            resized = resize(img, dim, interpolation = INTER_AREA)
 
-                #resize image
-                resized = resize(img, dim, interpolation = INTER_AREA)
+            imwrite(f'{complete_upload_folder}/{filename}', resized)
 
-                imwrite(f'{complete_upload_folder}/{filename}', resized)
-    
-                print('Resized Dimensions : ',resized.shape)
+            print('Resized Dimensions : ',resized.shape)
 
-            #### FINISHED THE ABOVE PART
+        #### FINISHED THE ABOVE PART
 
-            # Checking if option "with scratch" is marked (here name as "extra")
-            extra = request.form.get("extra")
-    
-            if not extra == "extra":
-                call(command1, shell=True)
-            else: 
-                call(command2, shell=True)
+        # Checking if option "with scratch" is marked (here name as "extra")
+        extra = request.form.get("extra")
 
-            
-            ## getting the links to post the pre and post pics
-            original = complete_upload_folder + "/" + filename
+        if not extra == "extra":
+            call(command1, shell=True)
+        else: 
+            call(command2, shell=True)
 
-            #sometimes "restoration engine" (original implementation program) changes the extension of the
-            #output file to png (eg sometimes if the original file was a jpg), 
-            # so that must be taken into consideration
-            
-            output_filename = None
-            for file in os.listdir(output_folder):
-                output_filename = file
+        
+        ## getting the links to post the pre and post pics
+        original = complete_upload_folder + "/" + filename
 
-            ## if for some reason execution didn't finish (must change text)
-            if not output_filename:
-                return redirect('/oops')
-            
-            result = output_folder + "/" + output_filename
-           
-            return render_template('result.html', original=original, result=result )
+        #sometimes "restoration engine" (original implementation program) changes the extension of the
+        #output file to png (eg sometimes if the original file was a jpg), 
+        # so that must be taken into consideration
+        
+        output_filename = None
+        for file in os.listdir(output_folder):
+            output_filename = file
+
+        ## if for some reason execution didn't finish (must change text)
+        if not output_filename:
+            return redirect('/oops')
+        
+        result = output_folder + "/" + output_filename
+        
+        return render_template('result.html', original=original, result=result )
           
 
 @app.route('/oops')
