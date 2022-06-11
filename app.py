@@ -9,6 +9,7 @@ from cv2 import imread, resize, INTER_AREA, imwrite, imshow, waitKey, destroyAll
 
 ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 
 # Initializing flask application

@@ -41,6 +41,7 @@ Clone the forked Bringing-Old-Photos-Back-to-Life repository
 
 ````
 git clone https://github.com/silver2v/Bringing-Old-Photos-Back-to-Life
+cd Bringing-Old-Photos-Back-to-Life
 ````
 Clone the Synchronized-BatchNorm-PyTorch repository for
 
@@ -55,7 +56,8 @@ cd Global/detection_models
 git clone https://github.com/vacancy/Synchronized-BatchNorm-PyTorch
 cp -rf Synchronized-BatchNorm-PyTorch/sync_batchnorm .
 cd ../../
-''''
+````
+
 Download the landmark detection pretrained model
 
 ```
@@ -75,7 +77,7 @@ cd ../
 cd Global/
 wget https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life/releases/download/v1.0/global_checkpoints.zip
 unzip global_checkpoints.zip
-cd ../
+cd ../../
 ```
 Install dependencies:
 
