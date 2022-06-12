@@ -11,11 +11,14 @@ Very easy to use and delivers good results with pictures with a wide range of da
 You can check it out live at https://imgmagik.com
 
 ## Motivation
-(falar que não encontrou os outros)
 
-Decided to pick an engine to put under the hood that ........... . This engine is ...... BRING BACK OLD PHOTOS, written in Pythob
+Restoring or improving the quality of photos, specially the ones that have some relevance to us, is something that can give a wow effect and cheer ones day.
 
-(falar que feito como Final Project)
+It's very hard to find a web or mobile image restoration app out in the wild well rounded enough to bring satisfactory results. Simply doing "AI upscalling" won't do it in a lot of cases.
+
+After researchig many different image restoration engines, I decided to do a implementation of [Bringing-Old-Photos-Back-to-Life](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) (with some tweaks) since it was the one that consistently delivered astouding results according to my experience.
+
+This web app was created as the final project for Harvard's [CS50x](https://cs50.harvard.edu/x/) course.
 
 # Main technologies used
 - Web app: Flask framework
@@ -26,7 +29,7 @@ Decided to pick an engine to put under the hood that ........... . This engine i
 # Requirements
 Some dependencies/libraries need at least 8-16GB RAM for instalation. [Tricks](https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-20-04/) can be done to install them with less RAM but the image processing probably will be slow or outright break.
 
-Necessary at least 10GB of free storage space for libraries and pre-trained models,
+Necessary at least 10GB of free storage space for libraries and pre-trained models.
 
 Python>=3.6 is required to run the code.
 
@@ -87,9 +90,32 @@ pip install -r requirements.txt
 
 
 # Usage
-Via browser, with a simple and intuitive user interface. 
+
+Using it locally:
+````
+flask run
+`````
+
+Then acess it via browser and enjoy a simple and intuitive user interface. 
 
 Can be used locally with a flask server or accessed in the cloud with Gunicorn and Nginx running, for example. 
+
+Important: code is set for normal CPU usage (slower):
+
+````
+command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+            --output_folder {complete_upload_folder}/output \
+            --GPU -1"
+        
+command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
+            --output_folder {complete_upload_folder}/output \
+            --GPU -1 \
+            --with_scratch"
+````
+
+
+To use Nvidia GPU and CUDA (if avaiable), change `GPU` argument to `0` (instead of `-1`) in *both* `command1` and `command2`
+
 
 
 # Implementation details and highlights
@@ -184,6 +210,10 @@ http{
 The 30000 number represents an arbitrary quantity of seconds, which presumably will be enough for all the processing time of the image restoration. 
 
 # Credits
+💪 Special thanks to:
+- Professor David J. Malan, Brian, Doug, and all CS50's staff
+- Ziyu Wan and the other authors of the paper used in the creation of this app
+- YT teachers (looking at you, epic Indian dudes)
 
 # License
 
