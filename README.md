@@ -1,7 +1,8 @@
 # imgmagik AI
 A powerful yet simple flask app that uses magic (aka AI) to restore and improve the quality of images. 
 
-![blabla](https://github.com/silver2v/img-magic/blob/main/static/examples/gif2.gif)
+!
+<img src="https://github.com/silver2v/img-magic/blob/main/static/examples/gif2.gif" alt="drawing" width="200"/>
 
 Very easy to use and delivers good results with pictures with a wide range of damage types:
 
