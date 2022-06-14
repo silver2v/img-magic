@@ -35,9 +35,9 @@ Python>=3.6 is required to run the code.
 
 The code was tested on MacOS and Ubuntu.
 
-For optimum performance Nvidia GPU with CUDA installed.
+For optimum performance: Nvidia GPU with CUDA installed.
 
- (**************************see part, where I talk about what to change in the code)
+
 
 # Instalation
 Clone the forked Bringing-Old-Photos-Back-to-Life repository
