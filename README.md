@@ -15,8 +15,8 @@ Very easy to use and delivers good results with pictures with a wide range of da
 - Clean visual noise
 
 <p float="left">
-  <img src="https://github.com/silver2v/img-magic/blob/main/static/examples/familia-90s.png" width="500" />
-  <img src="https://github.com/silver2v/img-magic/blob/main/static/examples/familia-90s%20restaured.png" width=500" /> 
+  <img src="https://github.com/silver2v/img-magic/blob/main/static/examples/familia-90s.png" width="350" />
+  <img src="https://github.com/silver2v/img-magic/blob/main/static/examples/familia-90s%20restaured.png" width=350" /> 
 </p>
 
 <p float="left">
