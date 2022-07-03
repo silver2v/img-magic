@@ -1,4 +1,7 @@
 # imgmagik AI
+
+#### Video Demo: https://www.youtube.com/watch?v=lNqUOYKXUiM
+
 A powerful yet simple flask app that uses magic (aka AI) to restore and improve the quality of images. 
 
 You can check it out live at https://imgmagik.com
@@ -116,28 +119,20 @@ Then acess it via browser and enjoy a simple and intuitive user interface.
 
 Can be used locally with a flask server or accessed in the cloud with Gunicorn and Nginx running, for example. 
 
-Important: code is set for normal CPU usage (slower):
+Important: the code is pre-configured for no GPU usage (slower): 
 
 ````
-command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
-            --output_folder {complete_upload_folder}/output \
-            --GPU -1"
-        
-command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
-            --output_folder {complete_upload_folder}/output \
-            --GPU -1 \
-            --with_scratch"
+GPU = False
 ````
 
 
-To use Nvidia GPU and CUDA (if avaiable), change `GPU` argument to `0` (instead of `-1`) in *both* `command1` and `command2`
-
+To use Nvidia GPU and CUDA (if avaiable), change `GPU` value to `True`.
 
 
 # Implementation details and highlights
 
 ## Keeeping the original file name
-To keep the original name of the uploaded image, the app creates a unique folder with a unique name for each file uploaded. 
+To keep the original name of the uploaded image, the app creates a unique folder with a unique name for each file uploaded. The following function is on helpers.py:
 
 ```
 def folder_name_generator(prefix, size=6, chars=ascii_letters + digits):
@@ -150,26 +145,16 @@ With this implementation, the restored image can preserve its original name, ins
 ## Image dimension limit and resizing
 Images that have too large dimensions can make the processing time unecessarily long or even break it.
 
-To avoid this problem, the code has an option to cap the limit of the dimensions of the image being restored (default cap: 1_000_000 pixels).
+To avoid this problem, the code has an option to cap the limit of the dimensions of the image being restored (PIXEL_LIMIT_VALUE = 1_000_000).
 
 If the dimensions of the image exceed the limit, the app will automatically decrease it in loops of -5% until the new dimensions are whithin the limit:
 
 ```
-reduce = True
-            max_pixels = 1_000_000
-            
-            # If dimenions of image bigger than  max_pixels, reduce 5% (while loop)
-            if reduce == True and pixels > max_pixels:
-                while pixels > 1_000_000:
-                    width = int(width * 95 / 100)
-                    height = int(height * 95 / 100)
-                    dim = (width, height)
-                    pixels = width * height
-                    print('new total pixels:', pixels)
-
-                #resize image
-                resized = resize(img, dim, interpolation = INTER_AREA)
+PIXEL_LIMIT = True
+# if the picture has bigger pixel dimensions, the app will automatically downsize it in 5% increments
+PIXEL_LIMIT_VALUE = 1_000_000
 ```
+To take out this limit: `PIXEL_LIMIT = False`
 
 ## Safe image name
 According to the Flask documentation:
@@ -192,7 +177,6 @@ If the user tries to upload a file with any of those extensions withouth it bein
 
 ```
 img = imread(file.filename)
-
         if img is None:
                 flash("""Seems like you uploaded a corrupted or not a true image file. 
                     Please try again with a new file.""")
@@ -232,5 +216,6 @@ The 30000 number represents an arbitrary quantity of seconds, which presumably w
 - YT teachers (looking at you, epic Indian dudes)
 
 # License
+[MIT](https://tldrlegal.com/license/mit-license)
 
 

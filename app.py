@@ -2,33 +2,22 @@ import os
 from subprocess import call
 from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
-from random import choice
-from string import ascii_letters, digits
 from cv2 import imread, resize, INTER_AREA, imwrite, imshow, waitKey, destroyAllWindows
+from helpers import extension_check, folder_name_generator
 
 
 ROOT_UPLOAD_FOLDER = 'static/uploads'
 OUTPUT_FOLDER = 'output/final_output'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+GPU = False
 
+PIXEL_LIMIT = True
+# if the picture has bigger pixel dimensions, the app will automatically downsize it in 5% increments
+PIXEL_LIMIT_VALUE = 1_000_000
 
 # Initializing flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'some random string'
-
-# Functions that checks if extension of the file is allowed
-#   the function returns a boolean value
-def allowed_extension(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# Function used later to help creating the 2nd part of the  name of the folder where both 
-#   original image (input) and its restored version (output)
-#   will be stored (1st part of the name of the folder, aka prefix is file name itself)
-#   This makes each folder name unique, and name of image can be preserved)
-#   Ex. folder name: my-image_kjdjksi.jpg
-def folder_name_generator(prefix, size=6, chars=ascii_letters + digits):
-    return prefix + '_' + ''.join(choice(chars) for _ in range(size))
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -49,7 +38,7 @@ def upload_file():
             flash('No selected file. Please choose an image and try again.')
             return redirect(request.url)
    
-        if not (file and allowed_extension(file.filename)):
+        if not (file and extension_check(file.filename, ALLOWED_EXTENSIONS)):
             flash("Allowed file types: " + ", ".join(str(x) for x in ALLOWED_EXTENSIONS) +  "." + " Please try again.")
 
         print('hey')
@@ -60,18 +49,24 @@ def upload_file():
         
         os.makedirs(complete_upload_folder)
 
-
         output_folder = f'{complete_upload_folder}/output/final_output'
         #Obs.: not necessary to makedir output_folder because "run.py" will do it by itself
-    
+
+
         # The CLI commands the original implementation uses
+
+        if GPU == True:
+            gpu_value = "0"
+        else:
+            gpu_value = "-1"
+
         command1 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
             --output_folder {complete_upload_folder}/output \
-            --GPU -1"
+            --GPU {gpu_value}"
         
         command2 = f"python3 Bringing-Old-Photos-Back-to-Life/run.py --input_folder {complete_upload_folder} \
             --output_folder {complete_upload_folder}/output \
-            --GPU -1 \
+            --GPU {gpu_value} \
             --with_scratch"
         
         file.save(os.path.join(complete_upload_folder, filename))
@@ -93,12 +88,10 @@ def upload_file():
         pixels = width * height
         print('total pixels:', pixels)
 
-        reduce = True
-        max_pixels = 1_000_000
         
         # If dimenions of image bigger than  max_pixels, reduce 5% (while loop)
-        if reduce == True and pixels > max_pixels:
-            while pixels > 1_000_000:
+        if PIXEL_LIMIT == True and pixels > PIXEL_LIMIT_VALUE:
+            while pixels > PIXEL_LIMIT_VALUE:
                 width = int(width * 95 / 100)
                 height = int(height * 95 / 100)
                 dim = (width, height)
@@ -156,11 +149,3 @@ if __name__=="__main__":
     app.run(host='0.0.0.0')
 
 
-### Bellow are parts of code from previous versions that are not being used anymore
-
-# app.config['UPLOAD_FOLDER'] = complete_upload_folder
-# app.config['OUTPUT_FOLDER'] = output_folder
-
-# @app.route('/<name>')
-# def download_file(name):
-#     return send_from_directory(app.config[OUTPUT_FOLDER], name)
