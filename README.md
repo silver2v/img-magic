@@ -179,6 +179,14 @@ img = imread(file.filename)
                     Please try again with a new file.""")
                 return redirect(request.url)
 ```
+
+## And oh
+Makes sure to change
+```
+app.config['SECRET_KEY'] = 'some random string'
+```
+To an actual random string
+
 # Cloud implementation
 The code was tested in the cloud using Gunicorn and Nginx.
 
